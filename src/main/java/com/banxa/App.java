@@ -14,12 +14,7 @@ import com.banxa.service.BanxaServiceImpl;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        BanxaService banxaService = new BanxaServiceImpl(new BanxaClientImpl(
-                "jeffjeff",
-                "JEFFJEFF",
-                "qpXGqd34NRYn0GJg0XQHn5fArN8t3XI2",
-                false)
-        );
+//        BanxaService banxaService = new BanxaServiceImpl(new BanxaClientImpl(false)        );
 
 //        BanxaResponse<GetOrderResponse> response = banxaService.getOrder(
 //                new GetOrderRequest.Builder("24e946232dd21b28e40a6d7983227a0c").build()
@@ -82,10 +77,10 @@ public class App {
 //        BanxaResponse<GetCountriesResponse> response = banxaService.getCountries(new GetCountriesRequest.Builder().build());
 //        BanxaResponse<GetUsStatesResponse> response = banxaService.getUsStates(new GetUsStatesRequest.Builder().build());
 //        BanxaResponse<GetPaymentMethodsResponse> response = banxaService.getPaymentMethods(new GetPaymentMethodsRequest.Builder().withSource("AUD").build());
-        BanxaResponse<GetPricesResponse> response = banxaService.getPrices(new GetPricesRequest.Builder("AUD", "BTC").withSourceAmount(100.0).withPaymentMethodId(5021).build());
+//        BanxaResponse<GetPricesResponse> response = banxaService.getPrices(new GetPricesRequest.Builder("AUD", "BTC").withSourceAmount(100.0).withPaymentMethodId(5021).build());
 //        BanxaResponse<GetPricesResponse> response = banxaService.getPrices(new GetPricesRequest.Builder("AUD", "BTC").withSourceAmount(100.0).build());
 
 
-        System.out.println("Done " + response.getResponse());
+//        System.out.println("Done " + response.getResponse());
     }
 }
