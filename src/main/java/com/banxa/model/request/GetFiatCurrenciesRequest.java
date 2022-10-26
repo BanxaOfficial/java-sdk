@@ -1,8 +1,9 @@
 package com.banxa.model.request;
 
 import com.banxa.model.OrderType;
+import com.banxa.model.response.GetFiatCurrenciesResponse;
 
-public class GetFiatCurrenciesRequest extends GetRequest {
+public class GetFiatCurrenciesRequest extends GetRequest<GetFiatCurrenciesResponse> {
 
     private final OrderType orderType;
 
@@ -21,6 +22,11 @@ public class GetFiatCurrenciesRequest extends GetRequest {
     @Override
     public String getUri() {
         return "/api/fiats/" + orderType.getType();
+    }
+
+    @Override
+    public Class<GetFiatCurrenciesResponse> getResponseClass() {
+        return GetFiatCurrenciesResponse.class;
     }
 
     public static class Builder {

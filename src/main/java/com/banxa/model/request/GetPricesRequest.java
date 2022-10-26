@@ -1,9 +1,11 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.GetPricesResponse;
+
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GetPricesRequest extends GetRequest {
+public class GetPricesRequest extends GetRequest<GetPricesResponse> {
     private static final String BASE_URI = "/api/prices";
     private final String source;
     private final Double sourceAmount;
@@ -35,6 +37,11 @@ public class GetPricesRequest extends GetRequest {
         this.addUriParam(uriParams, "blockchain", blockchain);
 
         return appendUriParams(BASE_URI, uriParams);
+    }
+
+    @Override
+    public Class<GetPricesResponse> getResponseClass() {
+        return GetPricesResponse.class;
     }
 
     public static class Builder {

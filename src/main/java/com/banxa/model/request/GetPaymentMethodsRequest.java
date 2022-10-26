@@ -1,9 +1,11 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.GetPaymentMethodsResponse;
+
 import java.util.Map;
 import java.util.TreeMap;
 
-public class GetPaymentMethodsRequest extends GetRequest {
+public class GetPaymentMethodsRequest extends GetRequest<GetPaymentMethodsResponse> {
     private static final String BASE_URI = "/api/payment-methods";
     private final String source;
     private final String target;
@@ -20,6 +22,11 @@ public class GetPaymentMethodsRequest extends GetRequest {
         this.addUriParam(uriParams, "target", target);
 
         return appendUriParams(BASE_URI, uriParams);
+    }
+
+    @Override
+    public Class<GetPaymentMethodsResponse> getResponseClass() {
+        return GetPaymentMethodsResponse.class;
     }
 
     public static class Builder {

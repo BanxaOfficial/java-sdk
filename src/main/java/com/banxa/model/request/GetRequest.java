@@ -2,7 +2,7 @@ package com.banxa.model.request;
 
 import java.util.Map;
 
-public abstract class GetRequest implements Request {
+public abstract class GetRequest<T> implements Request<T> {
     @Override
     public String getMethod() {
         return "GET";

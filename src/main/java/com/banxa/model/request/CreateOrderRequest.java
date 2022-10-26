@@ -2,7 +2,7 @@ package com.banxa.model.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public abstract class CreateOrderRequest extends PostRequest {
+public abstract class CreateOrderRequest<T> extends PostRequest<T> {
     private String accountReference;
     private Integer paymentMethodId;
     private String source;

@@ -1,6 +1,8 @@
 package com.banxa.model.request;
 
-public class CreateSellOrderRequest extends CreateOrderRequest {
+import com.banxa.model.response.CreateSellOrderResponse;
+
+public class CreateSellOrderRequest extends CreateOrderRequest<CreateSellOrderResponse> {
 
     private final String refundAddress;
     private final String refundAddressTag;
@@ -29,6 +31,11 @@ public class CreateSellOrderRequest extends CreateOrderRequest {
 
     public String getSourceAddressTag() {
         return sourceAddressTag;
+    }
+
+    @Override
+    public Class<CreateSellOrderResponse> getResponseClass() {
+        return CreateSellOrderResponse.class;
     }
 
     public static class Builder extends CreateOrderRequest.Builder<Builder> {

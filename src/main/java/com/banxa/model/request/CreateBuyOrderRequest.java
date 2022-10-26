@@ -1,6 +1,8 @@
 package com.banxa.model.request;
 
-public class CreateBuyOrderRequest extends CreateOrderRequest {
+import com.banxa.model.response.CreateBuyOrderResponse;
+
+public class CreateBuyOrderRequest extends CreateOrderRequest<CreateBuyOrderResponse> {
     private final String walletAddress;
     private String walletAddressTag;
 
@@ -16,6 +18,11 @@ public class CreateBuyOrderRequest extends CreateOrderRequest {
 
     public String getWalletAddressTag() {
         return walletAddressTag;
+    }
+
+    @Override
+    public Class<CreateBuyOrderResponse> getResponseClass() {
+        return CreateBuyOrderResponse.class;
     }
 
     public static class Builder extends CreateOrderRequest.Builder<Builder> {

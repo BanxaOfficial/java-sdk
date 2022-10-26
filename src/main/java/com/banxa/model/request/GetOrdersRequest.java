@@ -1,11 +1,13 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.GetOrdersResponse;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetOrdersRequest extends PaginatedGetRequest {
+public class GetOrdersRequest extends PaginatedGetRequest<GetOrdersResponse> {
     private static final String BASE_URI = "/api/orders";
 
     private final LocalDate startDate;
@@ -32,6 +34,11 @@ public class GetOrdersRequest extends PaginatedGetRequest {
         this.addUriParam(uriParams, "page", this.getPage());
 
         return appendUriParams(BASE_URI, uriParams);
+    }
+
+    @Override
+    public Class<GetOrdersResponse> getResponseClass() {
+        return GetOrdersResponse.class;
     }
 
     public static class Builder extends PaginatedGetRequest.Builder<Builder> {

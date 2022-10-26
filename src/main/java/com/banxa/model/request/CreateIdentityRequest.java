@@ -1,11 +1,12 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.CreateIdentityResponse;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateIdentityRequest extends PostRequest {
+public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
 
     private final String accountReference;
     private final String mobileNumber;
@@ -30,6 +31,11 @@ public class CreateIdentityRequest extends PostRequest {
         this.customerIdentity = customerIdentity;
         this.identityDocuments = identityDocuments;
         this.identitySharing = identitySharing;
+    }
+
+    @Override
+    public Class<CreateIdentityResponse> getResponseClass() {
+        return CreateIdentityResponse.class;
     }
 
     @Override

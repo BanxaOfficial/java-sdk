@@ -1,6 +1,8 @@
 package com.banxa.model.request;
 
-public class GetUsStatesRequest extends GetRequest {
+import com.banxa.model.response.GetUsStatesResponse;
+
+public class GetUsStatesRequest extends GetRequest<GetUsStatesResponse> {
 
     private GetUsStatesRequest(Builder builder) {
 
@@ -12,6 +14,11 @@ public class GetUsStatesRequest extends GetRequest {
     @Override
     public String getUri() {
         return "/api/countries/us/states";
+    }
+
+    @Override
+    public Class<GetUsStatesResponse> getResponseClass() {
+        return GetUsStatesResponse.class;
     }
 
     public static class Builder {

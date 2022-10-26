@@ -1,6 +1,8 @@
 package com.banxa.client;
 
 import com.banxa.authentication.Authentication;
+import com.banxa.exception.InvalidCredentialsException;
+import com.banxa.exception.SystemErrorException;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -29,9 +31,16 @@ public class BanxaClientImpl implements BanxaClient {
     }
 
     @Override
-    public String request(String method, String uri, String payload) throws Exception {
+    public BanxaClientResponse request(String method, String uri, String payload) {
         long nonce = System.currentTimeMillis();
-        String authToken = this.authentication.generateAuthToken(method, uri, payload, nonce);
+        String authToken = null;
+
+        try {
+            authToken = this.authentication.generateAuthToken(method, uri, payload, nonce);
+        } catch (Exception e) {
+            throw new InvalidCredentialsException("API Key or Secret either not provided or invalid");
+        }
+
         HttpClient httpClient = HttpClient.newHttpClient();
 
         HttpRequest.Builder builder = HttpRequest.newBuilder()
@@ -46,15 +55,13 @@ public class BanxaClientImpl implements BanxaClient {
             builder.POST(HttpRequest.BodyPublishers.ofString(payload));
         }
 
-        HttpRequest request = builder.build();
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        try {
+            HttpRequest request = builder.build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // TODO need to handle this better (potentially throw an exception or need to build a better response object)
-        if (response.statusCode() == 200) {
-            System.out.println("OK");
-        } else {
-            System.out.println("Failed: " + response.statusCode());
+            return new BanxaClientResponse(response.statusCode(), response.body());
+        } catch (Exception e) {
+            throw new SystemErrorException("Error making API call to Banxa", e);
         }
-        return response.body();
     }
 }

@@ -1,8 +1,9 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.CreateNftOrderResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-public class CreateNftOrderRequest extends CreateOrderRequest {
+public class CreateNftOrderRequest extends CreateOrderRequest<CreateNftOrderResponse> {
     private final String walletAddress;
     protected CreateNftOrderRequest(Builder builder) {
         super(builder);
@@ -16,6 +17,11 @@ public class CreateNftOrderRequest extends CreateOrderRequest {
     @Override
     public String getUri() {
         return "/api/orders/nft/buy";
+    }
+
+    @Override
+    public Class<CreateNftOrderResponse> getResponseClass() {
+        return CreateNftOrderResponse.class;
     }
 
     public static class Builder extends CreateOrderRequest.Builder<Builder> {

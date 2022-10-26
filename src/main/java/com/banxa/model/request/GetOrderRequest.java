@@ -1,9 +1,11 @@
 package com.banxa.model.request;
 
+import com.banxa.model.response.GetOrderResponse;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetOrderRequest extends GetRequest {
+public class GetOrderRequest extends GetRequest<GetOrderResponse> {
     private static final String BASE_URI = "/api/orders/";
     private final String orderId;
     private final String fxCurrency;
@@ -21,6 +23,11 @@ public class GetOrderRequest extends GetRequest {
         this.addUriParam(uriParams, "fx_currency", fxCurrency);
 
         return appendUriParams(uri, uriParams);
+    }
+
+    @Override
+    public Class<GetOrderResponse> getResponseClass() {
+        return GetOrderResponse.class;
     }
 
     public static class Builder {

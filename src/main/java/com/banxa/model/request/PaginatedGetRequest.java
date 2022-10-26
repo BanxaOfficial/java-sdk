@@ -1,6 +1,6 @@
 package com.banxa.model.request;
 
-public abstract class PaginatedGetRequest extends GetRequest {
+public abstract class PaginatedGetRequest<T> extends GetRequest<T> {
     private final Integer perPage;
     private Integer page;
 

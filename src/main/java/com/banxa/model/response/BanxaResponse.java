@@ -2,13 +2,19 @@ package com.banxa.model.response;
 
 public class BanxaResponse <T> {
     private final boolean success;
-    private final T response;
-    private final Pagination pagination;
+    private T response;
+    private ErrorResponse errorResponse;
+    private Pagination pagination;
 
-    public BanxaResponse(boolean success, T response, Pagination pagination) {
-        this.success = success;
+    public BanxaResponse(T response, Pagination pagination) {
+        this.success = true;
         this.response = response;
         this.pagination = pagination;
+    }
+
+    public BanxaResponse(ErrorResponse errorResponse) {
+        this.success = false;
+        this.errorResponse = errorResponse;
     }
 
     public boolean isSuccess() {
@@ -17,6 +23,10 @@ public class BanxaResponse <T> {
 
     public T getResponse() {
         return response;
+    }
+
+    public ErrorResponse getErrorResponse() {
+        return errorResponse;
     }
 
     public Pagination getPagination() {

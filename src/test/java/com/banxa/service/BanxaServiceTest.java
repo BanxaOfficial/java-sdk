@@ -1,6 +1,7 @@
 package com.banxa.service;
 
 import com.banxa.client.BanxaClient;
+import com.banxa.client.BanxaClientResponse;
 import com.banxa.model.OrderType;
 import com.banxa.model.TransactionFee;
 import com.banxa.model.TransactionLimit;
@@ -25,10 +26,10 @@ public class BanxaServiceTest {
     public void testGetFiatCurrenciesForBuy() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/fiats/buy", null))
-                .thenReturn("{\"data\":{\"fiats\":[{\"fiat_code\": \"AUD\",\"fiat_name\":\"Australian Dollar\",\"fiat_symbol\":\"A$\"},{\"fiat_code\": \"USD\",\"fiat_name\":\"US Dollar\",\"fiat_symbol\":\"$\"}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"fiats\":[{\"fiat_code\": \"AUD\",\"fiat_name\":\"Australian Dollar\",\"fiat_symbol\":\"A$\"},{\"fiat_code\": \"USD\",\"fiat_name\":\"US Dollar\",\"fiat_symbol\":\"$\"}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetFiatCurrenciesResponse> response = service.getFiatCurrencies(new GetFiatCurrenciesRequest(OrderType.BUY));
+        BanxaResponse<GetFiatCurrenciesResponse> response = service.request(new GetFiatCurrenciesRequest(OrderType.BUY));
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getFiats().size(), is(2));
@@ -45,10 +46,10 @@ public class BanxaServiceTest {
     public void testGetFiatCurrenciesForSell() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/fiats/sell", null))
-                .thenReturn("{\"data\":{\"fiats\":[{\"fiat_code\": \"AUD\",\"fiat_name\":\"Australian Dollar\",\"fiat_symbol\":\"A$\"},{\"fiat_code\": \"USD\",\"fiat_name\":\"US Dollar\",\"fiat_symbol\":\"$\"}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"fiats\":[{\"fiat_code\": \"AUD\",\"fiat_name\":\"Australian Dollar\",\"fiat_symbol\":\"A$\"},{\"fiat_code\": \"USD\",\"fiat_name\":\"US Dollar\",\"fiat_symbol\":\"$\"}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetFiatCurrenciesResponse> response = service.getFiatCurrencies(new GetFiatCurrenciesRequest(OrderType.SELL));
+        BanxaResponse<GetFiatCurrenciesResponse> response = service.request(new GetFiatCurrenciesRequest(OrderType.SELL));
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getFiats().size(), is(2));
@@ -65,10 +66,10 @@ public class BanxaServiceTest {
     public void testGetCryptoCurrenciesForBuy() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/coins/buy", null))
-                .thenReturn("{\"data\":{\"coins\":[{\"coin_code\":\"BTC\",\"coin_name\":\"Bitcoin\",\"blockchains\":[{\"code\":\"BTC\",\"description\":\"Bitcoin\",\"is_default\":true}]},{\"coin_code\":\"ETH\",\"coin_name\":\"Ethereum\",\"blockchains\":[{\"code\":\"ETH\",\"description\":\"Ethereum (ERC20)\",\"is_default\":true},{\"code\":\"MATIC\",\"description\":\"Polygon\",\"is_default\":false}]}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"coins\":[{\"coin_code\":\"BTC\",\"coin_name\":\"Bitcoin\",\"blockchains\":[{\"code\":\"BTC\",\"description\":\"Bitcoin\",\"is_default\":true}]},{\"coin_code\":\"ETH\",\"coin_name\":\"Ethereum\",\"blockchains\":[{\"code\":\"ETH\",\"description\":\"Ethereum (ERC20)\",\"is_default\":true},{\"code\":\"MATIC\",\"description\":\"Polygon\",\"is_default\":false}]}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetCryptoCurrenciesResponse> response = service.getCryptoCurrencies(new GetCryptoCurrenciesRequest(OrderType.BUY));
+        BanxaResponse<GetCryptoCurrenciesResponse> response = service.request(new GetCryptoCurrenciesRequest(OrderType.BUY));
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getCoins().size(), is(2));
@@ -95,10 +96,10 @@ public class BanxaServiceTest {
     public void testGetCryptoCurrenciesForSell() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/coins/sell", null))
-                .thenReturn("{\"data\":{\"coins\":[{\"coin_code\":\"BTC\",\"coin_name\":\"Bitcoin\",\"blockchains\":[{\"code\":\"BTC\",\"description\":\"Bitcoin\",\"is_default\":true}]},{\"coin_code\":\"ETH\",\"coin_name\":\"Ethereum\",\"blockchains\":[{\"code\":\"ETH\",\"description\":\"Ethereum (ERC20)\",\"is_default\":true},{\"code\":\"MATIC\",\"description\":\"Polygon\",\"is_default\":false}]}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"coins\":[{\"coin_code\":\"BTC\",\"coin_name\":\"Bitcoin\",\"blockchains\":[{\"code\":\"BTC\",\"description\":\"Bitcoin\",\"is_default\":true}]},{\"coin_code\":\"ETH\",\"coin_name\":\"Ethereum\",\"blockchains\":[{\"code\":\"ETH\",\"description\":\"Ethereum (ERC20)\",\"is_default\":true},{\"code\":\"MATIC\",\"description\":\"Polygon\",\"is_default\":false}]}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetCryptoCurrenciesResponse> response = service.getCryptoCurrencies(new GetCryptoCurrenciesRequest(OrderType.SELL));
+        BanxaResponse<GetCryptoCurrenciesResponse> response = service.request(new GetCryptoCurrenciesRequest(OrderType.SELL));
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getCoins().size(), is(2));
@@ -125,10 +126,10 @@ public class BanxaServiceTest {
     public void testGetCountries() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/countries", null))
-                .thenReturn("{\"data\":{\"countries\":[{\"country_code\":\"AU\",\"country_name\":\"Australia\"},{\"country_code\":\"US\",\"country_name\":\"United States\"}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"countries\":[{\"country_code\":\"AU\",\"country_name\":\"Australia\"},{\"country_code\":\"US\",\"country_name\":\"United States\"}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetCountriesResponse> response = service.getCountries(new GetCountriesRequest());
+        BanxaResponse<GetCountriesResponse> response = service.request(new GetCountriesRequest());
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getCountries().size(), is(2));
@@ -142,10 +143,10 @@ public class BanxaServiceTest {
     public void testGetUsStates() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/countries/us/states", null))
-                .thenReturn("{\"data\":{\"states\":[{\"state_code\":\"AL\",\"state_name\":\"Alabama\"},{\"state_code\":\"AK\",\"state_name\":\"Alaska\"}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"states\":[{\"state_code\":\"AL\",\"state_name\":\"Alabama\"},{\"state_code\":\"AK\",\"state_name\":\"Alaska\"}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetUsStatesResponse> response = service.getUsStates(new GetUsStatesRequest());
+        BanxaResponse<GetUsStatesResponse> response = service.request(new GetUsStatesRequest());
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getStates().size(), is(2));
@@ -159,13 +160,13 @@ public class BanxaServiceTest {
     public void testPaymentMethods() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/payment-methods?source=AUD", null))
-                .thenReturn("{\"data\":{\"payment_methods\":[" +
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"payment_methods\":[" +
                         "{\"id\":5021,\"paymentType\":\"POLI\",\"name\":\"POLi\",\"description\":\"POLi Payments allow you to buy digital currency by bank transfer using your internet banking\",\"logo_url\":\"https:\\/\\/jeffjeff.banxa.com\\/images\\/payment-providers\\/poli.png\",\"status\":\"ACTIVE\",\"supported_agents\":null,\"type\":\"FIAT_TO_CRYPTO\",\"supported_fiat\":[\"AUD\"],\"supported_coin\":[\"BTC\",\"ETH\",\"USDT\"],\"transaction_fees\":[{\"fiat_code\":\"AUD\",\"coin_code\":\"BTC\",\"fees\":[]},{\"fiat_code\":\"AUD\",\"coin_code\":\"ETH\",\"fees\":[]}],\"transaction_limits\":[{\"fiat_code\":\"AUD\",\"min\":\"2\",\"max\":\"50000\"}]}," +
                         "{\"id\":5035,\"paymentType\":\"NPP\",\"name\":\"PayID\",\"description\":\"PayID is a payment method which allows you to make a near\\u2011instant deposit from your Australian bank account to buy digital currency\",\"logo_url\":\"https:\\/\\/jeffjeff.banxa.com\\/images\\/payment-providers\\/npp.png\",\"status\":\"ACTIVE\",\"supported_agents\":null,\"type\":\"FIAT_TO_CRYPTO\",\"supported_fiat\":[\"AUD\"],\"supported_coin\":[\"BTC\",\"ETH\",\"USDT\"],\"transaction_fees\":[{\"fiat_code\":\"AUD\",\"coin_code\":\"BTC\",\"fees\":[]},{\"fiat_code\":\"AUD\",\"coin_code\":\"ETH\",\"fees\":[]}],\"transaction_limits\":[{\"fiat_code\":\"AUD\",\"min\":\"2\",\"max\":\"50000\"}]}" +
-                        "]}}");
+                        "]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetPaymentMethodsResponse> response = service.getPaymentMethods(new GetPaymentMethodsRequest.Builder().withSource("AUD").build());
+        BanxaResponse<GetPaymentMethodsResponse> response = service.request(new GetPaymentMethodsRequest.Builder().withSource("AUD").build());
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getPaymentMethods().size(), is(2));
@@ -190,10 +191,10 @@ public class BanxaServiceTest {
     public void testPrices() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/prices?payment_method_id=5021&source=AUD&source_amount=100.0&target=BTC", null))
-                .thenReturn("{\"data\":{\"spot_price\":\"32681.87\",\"prices\":[{\"payment_method_id\":5021,\"type\":\"FIAT_TO_CRYPTO\",\"spot_price_fee\":\"0.00\",\"spot_price_including_fee\":\"32681.87\",\"coin_amount\":\"0.00305980\",\"coin_code\":\"BTC\",\"fiat_amount\":\"100.00\",\"fiat_code\":\"AUD\",\"fee_amount\":\"0.00\",\"network_fee\":\"0.19\"}]}}");
+                .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"spot_price\":\"32681.87\",\"prices\":[{\"payment_method_id\":5021,\"type\":\"FIAT_TO_CRYPTO\",\"spot_price_fee\":\"0.00\",\"spot_price_including_fee\":\"32681.87\",\"coin_amount\":\"0.00305980\",\"coin_code\":\"BTC\",\"fiat_amount\":\"100.00\",\"fiat_code\":\"AUD\",\"fee_amount\":\"0.00\",\"network_fee\":\"0.19\"}]}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetPricesResponse> response = service.getPrices(new GetPricesRequest.Builder("AUD", "BTC").withPaymentMethodId(5021).withSourceAmount(100.0).build());
+        BanxaResponse<GetPricesResponse> response = service.request(new GetPricesRequest.Builder("AUD", "BTC").withPaymentMethodId(5021).withSourceAmount(100.0).build());
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getSpotPrice(), is("32681.87"));
@@ -210,13 +211,28 @@ public class BanxaServiceTest {
         assertThat(response.getResponse().getPrices().get(0).getNetworkFee(), is("0.19"));
     }
 
+    @Test
+    public void testPricesWithInvalidSourceCurrency() throws Exception {
+        BanxaClient client = Mockito.mock(BanxaClient.class);
+        when(client.request("GET", "/api/prices?payment_method_id=5021&source=AUDD&source_amount=100.0&target=BTC", null))
+                .thenReturn(new BanxaClientResponse(422, "{\"errors\":[{\"status\":\"422\",\"title\":\"Invalid Parameters\",\"detail\":{\"source\":\"The currency AUDD is not available.\"}}]}"));
+
+        BanxaService service = new BanxaServiceImpl(client);
+        BanxaResponse<GetPricesResponse> response = service.request(new GetPricesRequest.Builder("AUDD", "BTC").withPaymentMethodId(5021).withSourceAmount(100.0).build());
+
+        assertThat(response.isSuccess(), is(Boolean.FALSE));
+        assertThat(response.getErrorResponse().getMessage(), is("{\"errors\":[{\"status\":\"422\",\"title\":\"Invalid Parameters\",\"detail\":{\"source\":\"The currency AUDD is not available.\"}}]}"));
+        assertThat(response.getErrorResponse().getStatusCode(), is(422));
+        assertThat(response.getResponse(), is(nullValue()));
+    }
+
     public void testTemplate() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/payment-methods", null))
-                .thenReturn("");
+                .thenReturn(new BanxaClientResponse(200, ""));
 
         BanxaService service = new BanxaServiceImpl(client);
-        BanxaResponse<GetFiatCurrenciesResponse> response = service.getFiatCurrencies(new GetFiatCurrenciesRequest(OrderType.BUY));
+        BanxaResponse<GetFiatCurrenciesResponse> response = service.request(new GetFiatCurrenciesRequest(OrderType.BUY));
 
         assertThat(response.isSuccess(), is(Boolean.TRUE));
         assertThat(response.getResponse().getFiats().size(), is(2));

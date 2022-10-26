@@ -1,8 +1,9 @@
 package com.banxa.model.request;
 
 import com.banxa.model.OrderType;
+import com.banxa.model.response.GetCryptoCurrenciesResponse;
 
-public class GetCryptoCurrenciesRequest extends GetRequest {
+public class GetCryptoCurrenciesRequest extends GetRequest<GetCryptoCurrenciesResponse> {
     private final OrderType orderType;
 
     private GetCryptoCurrenciesRequest(Builder builder) {
@@ -20,6 +21,11 @@ public class GetCryptoCurrenciesRequest extends GetRequest {
     @Override
     public String getUri() {
         return "/api/coins/" + orderType.getType();
+    }
+
+    @Override
+    public Class<GetCryptoCurrenciesResponse> getResponseClass() {
+        return GetCryptoCurrenciesResponse.class;
     }
 
     public static class Builder {

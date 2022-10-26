@@ -2,6 +2,8 @@ package com.banxa.authentication;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
 public class Authentication {
@@ -21,7 +23,7 @@ public class Authentication {
      * @return
      * @throws Exception
      */
-    public String generateAuthToken(String method, String uri, String payload, long nonce) throws Exception {
+    public String generateAuthToken(String method, String uri, String payload, long nonce) throws NoSuchAlgorithmException, InvalidKeyException {
         String data = method + "\n" +
                 uri + "\n" +
                 nonce;
