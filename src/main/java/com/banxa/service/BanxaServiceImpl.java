@@ -12,6 +12,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.Locale;
 
+/**
+ *
+ */
 public class BanxaServiceImpl implements BanxaService {
 
     private final BanxaClient banxaClient;
@@ -20,6 +23,11 @@ public class BanxaServiceImpl implements BanxaService {
         this.banxaClient = banxaClient;
     }
 
+    /**
+     *
+     * @param request
+     * @return
+     */
     @Override
     public BanxaResponse<GetFiatCurrenciesResponse> getFiatCurrencies(GetFiatCurrenciesRequest request) {
         return request(request, GetFiatCurrenciesResponse.class);

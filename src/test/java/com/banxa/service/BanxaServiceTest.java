@@ -210,7 +210,6 @@ public class BanxaServiceTest {
         assertThat(response.getResponse().getPrices().get(0).getNetworkFee(), is("0.19"));
     }
 
-    @Test
     public void testTemplate() throws Exception {
         BanxaClient client = Mockito.mock(BanxaClient.class);
         when(client.request("GET", "/api/payment-methods", null))
