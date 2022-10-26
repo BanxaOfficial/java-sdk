@@ -21,7 +21,6 @@ public class Authentication {
      * @param uri
      * @param payload
      * @return
-     * @throws Exception
      */
     public String generateAuthToken(String method, String uri, String payload, long nonce) throws NoSuchAlgorithmException, InvalidKeyException {
         String data = method + "\n" +
