@@ -1,11 +1,5 @@
 package com.banxa.model.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NftMetaData implements MetaData {
     private final String purchaseReference;
     private final Nft nft;

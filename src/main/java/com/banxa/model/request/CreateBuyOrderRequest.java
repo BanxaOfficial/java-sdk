@@ -1,6 +1,7 @@
 package com.banxa.model.request;
 
 import com.banxa.model.response.CreateBuyOrderResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CreateBuyOrderRequest extends CreateOrderRequest<CreateBuyOrderResponse> {
     private final String walletAddress;
@@ -21,6 +22,7 @@ public class CreateBuyOrderRequest extends CreateOrderRequest<CreateBuyOrderResp
     }
 
     @Override
+    @JsonIgnore
     public Class<CreateBuyOrderResponse> getResponseClass() {
         return CreateBuyOrderResponse.class;
     }
@@ -29,8 +31,8 @@ public class CreateBuyOrderRequest extends CreateOrderRequest<CreateBuyOrderResp
         private final String walletAddress;
         private String walletAddressTag;
 
-        public Builder(String accountReference, String source, String target, String walletAddress, String returnUrlOnSuccess) {
-            super(accountReference, source, target, returnUrlOnSuccess);
+        public Builder(String accountReference, String fiatCode, String coinCode, String walletAddress, String returnUrlOnSuccess) {
+            super(accountReference, fiatCode, coinCode, returnUrlOnSuccess);
             this.walletAddress = walletAddress;
         }
 

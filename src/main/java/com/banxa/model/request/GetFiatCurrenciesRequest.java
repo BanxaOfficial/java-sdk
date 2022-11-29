@@ -29,6 +29,14 @@ public class GetFiatCurrenciesRequest extends GetRequest<GetFiatCurrenciesRespon
         return GetFiatCurrenciesResponse.class;
     }
 
+    public static Builder createBuyBuilder() {
+        return new Builder(OrderType.BUY);
+    }
+
+    public static Builder createSellBuilder() {
+        return new Builder(OrderType.SELL);
+    }
+
     public static class Builder {
         private final OrderType orderType;
 

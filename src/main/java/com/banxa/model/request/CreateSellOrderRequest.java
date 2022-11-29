@@ -1,6 +1,7 @@
 package com.banxa.model.request;
 
 import com.banxa.model.response.CreateSellOrderResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CreateSellOrderRequest extends CreateOrderRequest<CreateSellOrderResponse> {
 
@@ -34,6 +35,7 @@ public class CreateSellOrderRequest extends CreateOrderRequest<CreateSellOrderRe
     }
 
     @Override
+    @JsonIgnore
     public Class<CreateSellOrderResponse> getResponseClass() {
         return CreateSellOrderResponse.class;
     }
@@ -44,8 +46,8 @@ public class CreateSellOrderRequest extends CreateOrderRequest<CreateSellOrderRe
         private String sourceAddress;
         private String sourceAddressTag;
 
-        public Builder(String accountReference, String source, String target, String refundAddress, String returnUrlOnSuccess) {
-            super(accountReference, source, target, returnUrlOnSuccess);
+        public Builder(String accountReference, String coinCode, String fiatCode, String refundAddress, String returnUrlOnSuccess) {
+            super(accountReference, coinCode, fiatCode, returnUrlOnSuccess);
             this.refundAddress = refundAddress;
         }
 

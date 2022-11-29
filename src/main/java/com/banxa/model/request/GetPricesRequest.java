@@ -44,6 +44,14 @@ public class GetPricesRequest extends GetRequest<GetPricesResponse> {
         return GetPricesResponse.class;
     }
 
+    public static Builder createBuyBuilder(String fiatCode, String coinCode) {
+        return new Builder(fiatCode, coinCode);
+    }
+
+    public static Builder createSellBuilder(String fiatCode, String coinCode) {
+        return new Builder(coinCode, fiatCode);
+    }
+
     public static class Builder {
         private final String source;
         private Double sourceAmount;

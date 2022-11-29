@@ -29,6 +29,14 @@ public class GetPaymentMethodsRequest extends GetRequest<GetPaymentMethodsRespon
         return GetPaymentMethodsResponse.class;
     }
 
+    public static Builder createBuyBuilder(String fiatCode, String coinCode) {
+        return new Builder().withSource(fiatCode).withTarget(coinCode);
+    }
+
+    public static Builder createSellBuilder(String fiatCode, String coinCode) {
+        return new Builder().withSource(coinCode).withTarget(fiatCode);
+    }
+
     public static class Builder {
         private String source;
         private String target;

@@ -3,8 +3,8 @@ package com.banxa.model.response;
 public class ErrorResponse {
     public static final int DEFAULT_ERROR_STATUS_CODE = 500;
 
-    private String message;
-    private int statusCode;
+    private final String message;
+    private final int statusCode;
 
     public ErrorResponse(int statusCode, String message) {
         this.message = message;

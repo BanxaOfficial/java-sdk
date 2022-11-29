@@ -1,11 +1,14 @@
 package com.banxa.model.request;
 
+import com.banxa.model.OrderStatus;
 import com.banxa.model.response.GetOrdersResponse;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class GetOrdersRequest extends PaginatedGetRequest<GetOrdersResponse> {
     private static final String BASE_URI = "/api/orders";
@@ -19,13 +22,13 @@ public class GetOrdersRequest extends PaginatedGetRequest<GetOrdersResponse> {
         super(builder);
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
-        this.status = builder.status;
+        this.status = builder.statuses.isEmpty() ? null : String.join(",", builder.statuses);
         this.accountReference = builder.accountReference;
     }
 
     @Override
     public String getUri() {
-        Map<String, String> uriParams = new HashMap<>();
+        Map<String, String> uriParams = new TreeMap<>();
         this.addUriParam(uriParams, "start_date", startDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
         this.addUriParam(uriParams, "end_date", endDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
         this.addUriParam(uriParams, "status", status);
@@ -44,7 +47,7 @@ public class GetOrdersRequest extends PaginatedGetRequest<GetOrdersResponse> {
     public static class Builder extends PaginatedGetRequest.Builder<Builder> {
         private final LocalDate startDate;
         private final LocalDate endDate;
-        private String status;
+        private final List<String> statuses = new ArrayList<>();
         private String accountReference;
 
         public Builder(LocalDate startDate, LocalDate endDate) {
@@ -52,8 +55,8 @@ public class GetOrdersRequest extends PaginatedGetRequest<GetOrdersResponse> {
             this.endDate = endDate;
         }
 
-        public Builder withStatus(String status) {
-            this.status = status;
+        public Builder addStatus(OrderStatus status) {
+            this.statuses.add(status.getStatus());
             return this;
         }
 

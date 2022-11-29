@@ -2,6 +2,7 @@ package com.banxa.service;
 
 import com.banxa.client.BanxaClient;
 import com.banxa.client.BanxaClientResponse;
+import com.banxa.exception.BanxaException;
 import com.banxa.exception.InvalidResponseException;
 import com.banxa.model.request.*;
 import com.banxa.model.response.*;
@@ -9,6 +10,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.Locale;
@@ -24,7 +26,72 @@ public class BanxaServiceImpl implements BanxaService {
         this.banxaClient = banxaClient;
     }
 
-    public <T> BanxaResponse<T> request(Request<T> request) {
+    @Override
+    public GetFiatCurrenciesResponse getFiatCurrencies(GetFiatCurrenciesRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetCryptoCurrenciesResponse getCryptoCurrencies(GetCryptoCurrenciesRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetCountriesResponse getCountries(GetCountriesRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetUsStatesResponse getUsStates(GetUsStatesRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetPaymentMethodsResponse getPaymentMethods(GetPaymentMethodsRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetPricesResponse getPrices(GetPricesRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetOrderResponse getOrder(GetOrderRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public GetOrdersResponse getOrders(GetOrdersRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public CreateBuyOrderResponse createBuyOrder(CreateBuyOrderRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public CreateSellOrderResponse createSellOrder(CreateSellOrderRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public CreateNftOrderResponse createNftOrder(CreateNftOrderRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public ConfirmSellOrderResponse confirmSellOrder(ConfirmSellOrderRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    @Override
+    public CreateIdentityResponse createIdentity(CreateIdentityRequest request) throws BanxaException {
+        return request(request);
+    }
+
+    public <T> T request(Request<T> request) throws BanxaException {
         try {
             String payload = request.getPayload();
             String uri = request.getUri();
@@ -34,14 +101,14 @@ public class BanxaServiceImpl implements BanxaService {
             if (response.isSuccessful()) {
                 return buildResponse(request.getResponseClass(), response.getBody());
             } else {
-                return new BanxaResponse<>(new ErrorResponse(response.getCode(), response.getBody()));
+                throw new BanxaException(response.getCode() + ": " + response.getBody());
             }
         } catch(Exception e) {
-            return new BanxaResponse<>(new ErrorResponse(ErrorResponse.DEFAULT_ERROR_STATUS_CODE, e.getMessage()));
+            throw new BanxaException(ErrorResponse.DEFAULT_ERROR_STATUS_CODE + ": " + e.getMessage());
         }
     }
 
-    private static <T> BanxaResponse<T> buildResponse(Class<T> responseClass, String response) {
+    private static <T> T buildResponse(Class<T> responseClass, String response) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setLocale(Locale.US);
         mapper.registerModule(new JavaTimeModule());
@@ -51,16 +118,12 @@ public class BanxaServiceImpl implements BanxaService {
         try {
             // To ensure this can be converted from JSON properly we need to strip out the data and meta nodes
             JsonNode root = mapper.readTree(response);
-            String content = mapper.writeValueAsString(root.findValue("data"));
+            ObjectNode dataNode = (ObjectNode) root.findValue("data");
 
             JsonNode metaNode = root.findValue("meta");
-            Pagination pagination = null;
-            if (metaNode != null) {
-                String metaText = mapper.writeValueAsString(metaNode);
-                pagination = mapper.readValue(metaText, Pagination.class);
-            }
+            dataNode.putIfAbsent("pagination", metaNode);
 
-            return new BanxaResponse<>(mapper.readValue(content, responseClass), pagination);
+            return mapper.readValue(mapper.writeValueAsString(dataNode), responseClass);
         } catch (Exception e) {
             throw new InvalidResponseException(e);
         }

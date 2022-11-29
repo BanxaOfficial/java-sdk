@@ -34,6 +34,7 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
     }
 
     @Override
+    @JsonIgnore
     public Class<CreateIdentityResponse> getResponseClass() {
         return CreateIdentityResponse.class;
     }

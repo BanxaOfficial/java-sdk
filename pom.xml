@@ -6,7 +6,7 @@
 
   <groupId>com.banxa</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>1.0.1</version>
+  <version>1.1.0</version>
 
   <name>java-sdk</name>
   <description>The Java SDK for integration with Banxa's API</description>

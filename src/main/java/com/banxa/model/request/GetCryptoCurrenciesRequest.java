@@ -28,6 +28,14 @@ public class GetCryptoCurrenciesRequest extends GetRequest<GetCryptoCurrenciesRe
         return GetCryptoCurrenciesResponse.class;
     }
 
+    public static Builder createBuyBuilder() {
+        return new Builder(OrderType.BUY);
+    }
+
+    public static Builder createSellBuilder() {
+        return new Builder(OrderType.SELL);
+    }
+
     public static class Builder {
         private final OrderType orderType;
 
