@@ -259,7 +259,7 @@ public class BanxaServiceTest {
     @Test
     public void testCreateIdentity() throws BanxaException {
         BanxaClient client = Mockito.mock(BanxaClient.class);
-        when(client.request("POST", "/api/identities", "{\"account_reference\":\"TEST_1234\",\"mobile_number\":\"61431000001\",\"email\":\"test@test.com\",\"customer_identity\":{\"given_name\":\"Joe\",\"surname\":\"Bloggs\",\"residential_address\":{\"country\":\"AU\"}},\"identity_documents\":[{\"type\":\"DRIVING_LICENSE\",\"images\":[{\"link\":\"https://example.com/example.png\"}],\"data\":{\"number\":\"12345\"}}]}"))
+        when(client.request("POST", "/api/identities", "{\"account_reference\":\"TEST_1234\",\"mobile_number\":\"61431000001\",\"email\":\"test@test.com\",\"customer_identity\":{\"given_name\":\"Joe\",\"surname\":\"Bloggs\",\"residential_address\":{\"country\":\"AU\"}},\"identity_documents\":[{\"type\":\"DRIVING_LICENSE\",\"images\":[{\"link\":\"https://example.com/example.png\"}],\"data\":{\"number\":\"12345\"}}],\"identity_sharing\":[{\"provider\":\"sumsub\",\"token\":\"TOKEN123\"}]}"))
                 .thenReturn(new BanxaClientResponse(200, "{\"data\":{\"account\":{\"account_id\":\"7cbfd31a2880c82deb\",\"account_reference\":\"TEST_1234\"}}}"));
 
         BanxaService service = new BanxaServiceImpl(client);
@@ -274,6 +274,7 @@ public class BanxaServiceTest {
                         .withData(new IdentityDocumentData("12345"))
                         .addImage(new IdentityDocumentImage("https://example.com/example.png"))
                         .build())
+                .addIdentitySharing(new IdentitySharing.Builder("sumsub", "TOKEN123").build())
                 .build());
 
         assertThat(response.getAccount().getAccountReference(), is("TEST_1234"));

@@ -527,7 +527,7 @@ checkout
 | `emailAddress`     | `string`           | `true`   | Email address of customer                                                                                                                   |
 | `customerIdentity` | `CustomerIdentity` | `true`   | `CustomerIdentity` object                                                                                                                   |
 | `identityDocument` | `IdentityDocument` | `false`  | `IdentityDocument` object                                                                                                                   |
-| `identitySharing`  | `String`           | `false`  | An array of objects containing KYC outcomes. Required for Sumsub only                                                                       |
+| `identitySharing`  | `IdentitySharing`  | `false`  | An array of `IdentitySharing` objects. Required for Sumsub only                                                                             |
 
 
 ---
@@ -582,3 +582,11 @@ checkout
 | Property | type     | required | description         |
 |:---------|:---------|:---------|:--------------------|
 | `number` | `String` | `true`   | The document number |
+
+---
+> **IdentitySharing**
+
+| Property   | type     | required | description                                                                                                                                   |
+|:-----------|:---------|:---------|:----------------------------------------------------------------------------------------------------------------------------------------------|
+| `provider` | `String` | `true`   | KYC provider that you have used, currently sumsub is the only supported value. Required for Sumsub only.                                      |
+| `token`    | `String` | `true`   | Customer token ID that is supplied by the KYC provider that will be used by Banxa to retrieve customer KYC details. Required for Sumsub only. |
