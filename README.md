@@ -56,7 +56,7 @@ Install the package via maven
     <dependency>
       <groupId>com.banxa</groupId>
       <artifactId>java-sdk</artifactId>
-      <version>1.1.0</version>
+      <version>1.2.0</version>
     </dependency> 
 ```
 
