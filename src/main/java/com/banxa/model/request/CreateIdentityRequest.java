@@ -13,7 +13,7 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
     private final String email;
     private final CustomerIdentity customerIdentity;
     private final List<IdentityDocument> identityDocuments;
-    private final String identitySharing;
+    private final List<IdentitySharing> identitySharing;
 
     private CreateIdentityRequest(Builder builder) {
         this.accountReference = builder.accountReference;
@@ -24,7 +24,7 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
         this.identitySharing = builder.identitySharing;
     }
 
-    public CreateIdentityRequest(String accountReference, String mobileNumber, String email, CustomerIdentity customerIdentity, List<IdentityDocument> identityDocuments, String identitySharing) {
+    public CreateIdentityRequest(String accountReference, String mobileNumber, String email, CustomerIdentity customerIdentity, List<IdentityDocument> identityDocuments, List<IdentitySharing> identitySharing) {
         this.accountReference = accountReference;
         this.mobileNumber = mobileNumber;
         this.email = email;
@@ -65,7 +65,7 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
         return identityDocuments;
     }
 
-    public String getIdentitySharing() {
+    public List<IdentitySharing> getIdentitySharing() {
         return identitySharing;
     }
 
@@ -75,7 +75,7 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
         private final String email;
         private CustomerIdentity customerIdentity;
         private List<IdentityDocument> identityDocuments;
-        private String identitySharing;
+        private List<IdentitySharing> identitySharing;
 
         public Builder(String accountReference, String mobileNumber, String email) {
             this.accountReference = accountReference;
@@ -96,8 +96,11 @@ public class CreateIdentityRequest extends PostRequest<CreateIdentityResponse> {
             return this;
         }
 
-        public Builder withIdentitySharing(String identitySharing) {
-            this.identitySharing = identitySharing;
+        public Builder addIdentitySharing(IdentitySharing identitySharing) {
+            if (this.identitySharing == null) {
+                this.identitySharing = new ArrayList<>();
+            }
+            this.identitySharing.add(identitySharing);
             return this;
         }
 
